@@ -1,5 +1,11 @@
-if ((Test-Path -Path ./game.exe) -eq $true) {
-    Remove-Item -Path ./game.exe -Force
-}
+Param (
+	[Switch]$Run
+)
+
+Remove-Item -Path ./game.exe -Force -ErrorAction Ignore
+
 gcc -g main.c -o game.exe -O1 -Wall -std=c99 -Wno-missing-braces -I include/ -L lib/ -lraylib -lopengl32 -lgdi32 -lwinmm
-./game.exe
+
+if ($Run.IsPresent) {
+	./game.exe
+}
